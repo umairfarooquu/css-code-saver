@@ -15,8 +15,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Middleware
 app.use(cors());
 app.use(express.json());
-// Serve static files from root directory since index.html is there
-app.use(express.static(__dirname));
+// Serve static files from the project root (one directory up from /api)
+app.use(express.static(path.join(__dirname, '..')));
 
 // GET all snippets
 app.get('/api/snippets', async (req, res) => {

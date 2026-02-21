@@ -62,7 +62,7 @@ async function init() {
 
 async function fetchFolders() {
     try {
-        const response = await fetch('http://localhost:3000/api/folders');
+        const response = await fetch('/api/folders');
         if (response.ok) {
             folders = await response.json();
         } else {
@@ -75,7 +75,7 @@ async function fetchFolders() {
 
 async function fetchSnippets() {
     try {
-        const response = await fetch('http://localhost:3000/api/snippets');
+        const response = await fetch('/api/snippets');
         if (response.ok) {
             snippets = await response.json();
             renderSnippets();
@@ -133,7 +133,7 @@ function renderSidebar() {
             const id = e.currentTarget.getAttribute('data-id');
             if (confirm('Are you sure you want to delete this folder? Snippets inside will be moved to Dashboard.')) {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/folders/${id}`, { method: 'DELETE' });
+                    const response = await fetch(`/api/folders/${id}`, { method: 'DELETE' });
                     if (response.ok) {
                         // Reset filter if deleting active folder
                         if (state.filterType === 'folder' && state.filterValue === id) {
@@ -240,7 +240,7 @@ function renderSnippets() {
             const id = e.currentTarget.getAttribute('data-id');
             if (confirm('Are you sure you want to delete this snippet?')) {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/snippets/${id}`, { method: 'DELETE' });
+                    const response = await fetch(`/api/snippets/${id}`, { method: 'DELETE' });
                     if (response.ok) {
                         await fetchSnippets();
                     } else {
@@ -362,7 +362,7 @@ function setupModalListeners() {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/api/snippets', {
+            const response = await fetch('/api/snippets', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -403,7 +403,7 @@ function setupModalListeners() {
         };
 
         try {
-            const response = await fetch(`http://localhost:3000/api/snippets/${id}`, {
+            const response = await fetch(`/api/snippets/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -431,7 +431,7 @@ function setupModalListeners() {
         const color = folderColorInput.value;
 
         try {
-            const response = await fetch('http://localhost:3000/api/folders', {
+            const response = await fetch('/api/folders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
