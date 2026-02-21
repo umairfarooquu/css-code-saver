@@ -1,0 +1,27 @@
+[
+  {
+    "id": "f3",
+    "name": "Fall Semester",
+    "color": "#4f46e5"
+  },
+  {
+    "id": "f4",
+    "name": "Personal Projs",
+    "color": "#4f46e5"
+  },
+  {
+    "name": "Direct API Folder",
+    "color": "#ff0000",
+    "id": "f5"
+  },
+  {
+    "name": "My Test Folder",
+    "color": "#4f46e5",
+    "id": "f6"
+  },
+  {
+    "name": "Pytho",
+    "color": "#8582ba",
+    "id": "f7"
+  }
+]

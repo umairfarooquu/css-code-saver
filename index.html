@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnipSave CLI</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts and Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Highlight.js CSS for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    
+    <!-- Custom CSS with Cache Buster -->
+    <link rel="stylesheet" href="styles.css?v=9">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-ship"></i>
+                    <span>SnipSave CLI</span>
+                </div>
+            </div>
+
+            <div class="sidebar-action">
+                <button class="btn btn-primary btn-block" id="create-snippet-btn">
+                    Create Snippet
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fa-regular fa-folder-closed"></i>
+                    Dashboard
+                </a>
+
+                <div class="nav-section">
+                    <div class="nav-section-title d-flex justify-content-between">
+                        <span>Folders</span>
+                        <button class="add-btn" id="add-folder-btn"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <ul class="nav-list" id="folders-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Languages</div>
+                    <ul class="nav-list" id="languages-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item" id="settings-btn">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </div>
+            <!-- Placed here at bottom of sidebar -->
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://ui-avatars.com/api/?name=Mirza+Umair&background=4f46e5&color=fff" alt="User Avatar">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Mirza Umair</div>
+                    <div class="user-role">Pro Member</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="greeting">
+                    <h1>Welcome, Mirza Umair</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-input" placeholder="Search Snippets">
+                    </div>
+                </div>
+            </header>
+
+            <div class="snippets-container" id="snippets-container">
+                <!-- Snippets will be injected here via JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Create Snippet Modal -->
+    <div class="modal-overlay" id="create-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Snippet</h2>
+                <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="create-snippet-form">
+                    <div class="form-group">
+                        <label for="snippet-title-input">Title</label>
+                        <input type="text" id="snippet-title-input" required placeholder="e.g., Axios Fetch Helper">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="snippet-language-input">Language</label>
+                            <select id="snippet-language-input" required>
+                                <option value="" disabled selected>Select Language</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="snippet-folder-input">Folder (Optional)</label>
+                            <select id="snippet-folder-input">
+                                <option value="">None (Dashboard)</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="snippet-code-input">Code Content</label>
+                        <textarea id="snippet-code-input" rows="8" required placeholder="Paste your code here..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary cancel-modal-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Snippet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Snippet Modal -->
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Snippet</h2>
+                <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-snippet-form">
+                    <input type="hidden" id="edit-snippet-id">
+                    <div class="form-group">
+                        <label for="edit-title-input">Title</label>
+                        <input type="text" id="edit-title-input" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-language-input">Language</label>
+                            <select id="edit-language-input" required>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-folder-input">Folder (Optional)</label>
+                            <select id="edit-folder-input">
+                                <option value="">None (Dashboard)</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-code-input">Code Content</label>
+                        <textarea id="edit-code-input" rows="8" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary cancel-modal-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Folder Modal -->
+    <div class="modal-overlay" id="create-folder-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Folder</h2>
+                <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="create-folder-form">
+                    <div class="form-group">
+                        <label for="folder-name-input">Folder Name</label>
+                        <input type="text" id="folder-name-input" required placeholder="e.g., Python Projects">
+                    </div>
+                    <div class="form-group">
+                        <label for="folder-color-input">Color Tag</label>
+                        <input type="color" id="folder-color-input" value="#4f46e5" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary cancel-modal-btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Folder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Application Settings</h2>
+                <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Appearance</label>
+                    <div class="toggle-switch-container">
+                        <span>Light Mode</span>
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span>Dark Mode</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlight.js Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Custom JS -->
+    <script src="app.js?v=8"></script>
+</body>
+</html>

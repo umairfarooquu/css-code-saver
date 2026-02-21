@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Local DB Test",
+    "language": "Cobol",
+    "folderId": "f3",
+    "code": ".pill-list .elementor-icon-list-items {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 14px;\n}\n\n.pill-list .elementor-icon-list-item {\n    width: auto;\n}",
+    "id": 6
+  },
+  {
+    "title": "Test Snippet",
+    "language": "JavaScript",
+    "folderId": "f3",
+    "code": "const test = 1;",
+    "id": 5
+  },
+  {
+    "title": "y",
+    "language": "CSS",
+    "folderId": "f7",
+    "code": ".pill-list .elementor-icon-list-items {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 14px;\n}\n\n.pill-list .elementor-icon-list-item {\n    width: auto;\n}\n\n.pill-list .elementor-icon-list-text {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    padding: 10px 22px;\n    border-radius: 999px;\n    border: 1px solid rgba(255,255,255,0.35);\n    background: rgba(0,0,0,0.35); /* glass effect */\n    color: white;\n    font-size: 16px;\n    line-height: 1;\n    transition: all 0.25s ease;\n}\n\n/* Hover Effect */\n.pill-list .elementor-icon-list-item:hover .elementor-icon-list-text {\n    background: rgba(255,255,255,0.15);\n    border-color: rgba(255,255,255,0.6);\n    transform: translateY(-1px);\n}",
+    "id": 4
+  },
+  {
+    "title": "Local DB Test",
+    "language": "CSS",
+    "folderId": null,
+    "code": ".pill-list .elementor-icon-list-items {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 14px;\n}\n\n.pill-list .elementor-icon-list-item {\n    width: auto;\n}\n\n.pill-list .elementor-icon-list-text {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    padding: 10px 22px;\n    border-radius: 999px;\n    border: 1px solid rgba(255,255,255,0.35);\n    background: rgba(0,0,0,0.35); /* glass effect */\n    color: white;\n    font-size: 16px;\n    line-height: 1;\n    transition: all 0.25s ease;\n}\n\n/* Hover Effect */\n.pill-list .elementor-icon-list-item:hover .elementor-icon-list-text {\n    background: rgba(255,255,255,0.15);\n    border-color: rgba(255,255,255,0.6);\n    transform: translateY(-1px);\n}",
+    "id": 3
+  }
+]
