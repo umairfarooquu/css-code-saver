@@ -214,18 +214,57 @@
                 <button class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body">
+                <div class="form-group mb-4">
+                    <label>Security: Password Protection</label>
+                    <div class="toggle-switch-container" style="justify-content: flex-start; gap: 1rem; margin-bottom: 0.5rem;">
+                        <label class="switch">
+                            <input type="checkbox" id="settings-password-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span id="settings-password-status-text">Enabled</span>
+                    </div>
+                </div>
+                <div class="form-group" id="settings-password-input-group">
+                    <label for="settings-app-password">App Password (PIN)</label>
+                    <input type="password" id="settings-app-password" placeholder="Enter new password (e.g., 889900)">
+                </div>
+                
+                <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--border-color);">
+                
                 <div class="form-group">
-                    <label>Appearance</label>
+                    <label>Appearance (Premium Feature)</label>
                     <div class="toggle-switch-container">
                         <span>Light Mode</span>
                         <label class="switch">
-                            <input type="checkbox" id="theme-toggle">
+                            <input type="checkbox" id="theme-toggle" disabled>
                             <span class="slider round"></span>
                         </label>
                         <span>Dark Mode</span>
                     </div>
                 </div>
+                
+                <div class="modal-footer" style="margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-primary" id="save-settings-btn" style="width: 100%;">Save Settings</button>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Full Screen Password Overlay -->
+    <div class="password-screen" id="password-screen">
+        <div class="password-card">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                <h2>SnipSave Protected</h2>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">Enter password to unlock application</p>
+            </div>
+            <form id="password-unlock-form">
+                <div class="form-group">
+                    <input type="password" id="unlock-password-input" placeholder="Enter PIN" required style="text-align: center; font-size: 1.25rem; letter-spacing: 0.25rem;">
+                </div>
+                <div id="unlock-error-message" style="color: #ef4444; font-size: 0.875rem; text-align: center; margin-bottom: 1rem; display: none;">Incorrect password</div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Unlock Application</button>
+            </form>
         </div>
     </div>
 

@@ -57,14 +57,56 @@ const folderColorInput = document.getElementById('folder-color-input');
 
 const themeToggle = document.getElementById('theme-toggle');
 
+// Security State
+let isProtected = localStorage.getItem('snipsave-protected') !== 'false'; // Defaults to true
+let appPassword = localStorage.getItem('snipsave-password') || '889900';
+
+// Password Screen Elements
+const passwordScreen = document.getElementById('password-screen');
+const unlockForm = document.getElementById('password-unlock-form');
+const unlockInput = document.getElementById('unlock-password-input');
+const unlockError = document.getElementById('unlock-error-message');
+
+// Settings Elements
+const settingsPasswordToggle = document.getElementById('settings-password-toggle');
+const settingsPasswordInput = document.getElementById('settings-app-password');
+const settingsStatusText = document.getElementById('settings-password-status-text');
+const saveSettingsBtn = document.getElementById('save-settings-btn');
+
 // Initialize
 async function init() {
+    // Basic global listeners always active
+    setupSecurityListeners();
+    
+    // Check lock state
+    if (isProtected) {
+        passwordScreen.classList.add('active');
+    } else {
+        await bootApp();
+    }
+}
+
+async function bootApp() {
     await fetchFolders(); // Need folders before rendering sidebar and selects
     renderSidebar();
     populateSelects();
     await fetchSnippets();
     setupEventListeners();
     setupModalListeners();
+}
+
+function setupSecurityListeners() {
+    unlockForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (unlockInput.value === appPassword) {
+            unlockError.style.display = 'none';
+            passwordScreen.classList.remove('active');
+            await bootApp();
+        } else {
+            unlockError.style.display = 'block';
+            unlockInput.value = '';
+        }
+    });
 }
 
 async function fetchFolders() {
@@ -357,7 +399,30 @@ function setupModalListeners() {
 
     settingsBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        // Populate settings from local state
+        settingsPasswordToggle.checked = isProtected;
+        settingsStatusText.textContent = isProtected ? 'Enabled' : 'Disabled';
+        settingsPasswordInput.value = appPassword;
+        
         settingsModal.classList.add('active');
+    });
+
+    // Settings Interactive Logic
+    settingsPasswordToggle.addEventListener('change', (e) => {
+        settingsStatusText.textContent = e.target.checked ? 'Enabled' : 'Disabled';
+    });
+
+    saveSettingsBtn.addEventListener('click', () => {
+        const newProtection = settingsPasswordToggle.checked;
+        const newPass = settingsPasswordInput.value || '889900';
+        
+        localStorage.setItem('snipsave-protected', newProtection);
+        localStorage.setItem('snipsave-password', newPass);
+        
+        isProtected = newProtection;
+        appPassword = newPass;
+        
+        settingsModal.classList.remove('active');
     });
 
     if(addFolderBtn) {

@@ -692,3 +692,42 @@ body.dark-mode .btn-secondary:hover { background-color: #374151; }
 body.dark-mode .nav-item:hover, body.dark-mode .nav-list-item:hover { background-color: #374151; }
 body.dark-mode .sidebar-nav::-webkit-scrollbar-thumb { background-color: #4b5563; }
 
+/* Password Screen */
+.password-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.password-screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.password-card {
+    background: var(--bg-color);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 400px;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
