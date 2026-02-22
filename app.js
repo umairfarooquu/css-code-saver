@@ -1,10 +1,17 @@
-// Mock Data
-const languages = [
-    'ABAP', 'ADA', 'ActionScript', 'Bro...', 'C#', 'CSS', 'Cobol', 'JavaScript', 'Python', 'R', 'text'
+// Comprehensive list of programming languages for the dropdown menus
+const allLanguages = [
+    'ABAP', 'ActionScript', 'Ada', 'Assembly', 'Bash', 'C', 'C#', 'C++', 
+    'Clojure', 'COBOL', 'CoffeeScript', 'CSS', 'Dart', 'Elixir', 'Erlang', 
+    'F#', 'Fortran', 'Go', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 
+    'JSON', 'Julia', 'Kotlin', 'Lisp', 'Lua', 'MATLAB', 'Objective-C', 
+    'OCaml', 'Pascal', 'Perl', 'PHP', 'PowerShell', 'Prolog', 'Python', 
+    'R', 'Ruby', 'Rust', 'Scala', 'Scheme', 'Shell', 'SQL', 'Swift', 
+    'Text', 'TypeScript', 'Visual Basic', 'Vue', 'XML', 'YAML'
 ];
 
 let folders = [];
 let snippets = [];
+let usedLanguages = [];
 
 // State
 let state = {
@@ -78,7 +85,9 @@ async function fetchSnippets() {
         const response = await fetch('/api/snippets');
         if (response.ok) {
             snippets = await response.json();
+            updateUsedLanguages();
             renderSnippets();
+            renderSidebar(); // Re-render sidebar to show new languages
         } else {
             console.error('Failed to load snippets');
         }
@@ -87,8 +96,21 @@ async function fetchSnippets() {
     }
 }
 
+function updateUsedLanguages() {
+    // Extract unique languages from user's actual snippets
+    const snippetLanguages = snippets
+        .map(s => s.language)
+        .filter(lang => lang); // Remove null/undefined
+
+    // Create a unique set and sort it alphabetically
+    usedLanguages = [...new Set(snippetLanguages)].sort((a, b) => 
+        a.localeCompare(b, undefined, { sensitivity: 'base' })
+    );
+}
+
 function populateSelects() {
-    const languageOptions = languages.map(l => `<option value="${l}">${l}</option>`).join('');
+    // Dropdowns should always show ALL available languages
+    const languageOptions = allLanguages.map(l => `<option value="${l}">${l}</option>`).join('');
     const folderOptions = folders.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
     
     // Clear first to prevent duplication
@@ -116,8 +138,8 @@ function renderSidebar() {
         </li>
     `).join('');
 
-    // Render Languages
-    languagesList.innerHTML = languages.map(l => `
+    // Render Languages (Dynamically based on snippets)
+    languagesList.innerHTML = usedLanguages.map(l => `
         <li>
             <a href="#" class="nav-list-item" data-type="language" data-id="${l}">
                 <div class="nav-icon-circle">${l.charAt(0).toUpperCase()}</div>
