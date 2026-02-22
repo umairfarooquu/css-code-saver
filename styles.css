@@ -136,6 +136,9 @@ body {
     background-color: var(--primary);
     color: white;
 }
+#save-settings-btn{
+    padding: 0.9rem 1rem!important;
+}
 
 .btn-primary:hover {
     background-color: var(--primary-hover);
