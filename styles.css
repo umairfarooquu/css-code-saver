@@ -694,8 +694,15 @@ body.dark-mode .sidebar-nav::-webkit-scrollbar-thumb { background-color: #4b5563
 
 /* Password Inputs & Eye Icons */
 .password-input-wrapper input {
-    width: 100%;
-    padding-right: 2.5rem; /* Make room for the eye icon */
+   width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    font-family: inherit;
+    font-size: 0.875rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    padding-right: 2.5rem;
 }
 
 .password-toggle-btn {
