@@ -226,7 +226,18 @@
                 </div>
                 <div class="form-group" id="settings-password-input-group">
                     <label for="settings-app-password">App Password (PIN)</label>
-                    <input type="password" id="settings-app-password" placeholder="Enter new password (e.g., 889900)">
+                    <div class="password-input-wrapper" style="position: relative;">
+                        <input type="password" id="settings-app-password" placeholder="Enter new password (e.g., 889900)">
+                        <button type="button" class="password-toggle-btn" tabindex="-1"><i class="fa-regular fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="form-group" id="settings-confirm-password-group">
+                    <label for="settings-confirm-password">Confirm Password</label>
+                    <div class="password-input-wrapper" style="position: relative;">
+                        <input type="password" id="settings-confirm-password" placeholder="Confirm new password">
+                        <button type="button" class="password-toggle-btn" tabindex="-1"><i class="fa-regular fa-eye"></i></button>
+                    </div>
+                    <div id="settings-password-error" style="color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem; display: none;">Passwords do not match</div>
                 </div>
                 
                 <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--border-color);">
@@ -260,7 +271,10 @@
             </div>
             <form id="password-unlock-form">
                 <div class="form-group">
-                    <input type="password" id="unlock-password-input" placeholder="Enter PIN" required style="text-align: center; font-size: 1.25rem; letter-spacing: 0.25rem;">
+                    <div class="password-input-wrapper" style="position: relative;">
+                        <input type="password" id="unlock-password-input" placeholder="Enter PIN" required style="text-align: center; font-size: 1.25rem; letter-spacing: 0.25rem; padding-right: 3rem;">
+                        <button type="button" class="password-toggle-btn" tabindex="-1"><i class="fa-regular fa-eye"></i></button>
+                    </div>
                 </div>
                 <div id="unlock-error-message" style="color: #ef4444; font-size: 0.875rem; text-align: center; margin-bottom: 1rem; display: none;">Incorrect password</div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Unlock Application</button>

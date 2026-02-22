@@ -70,6 +70,8 @@ const unlockError = document.getElementById('unlock-error-message');
 // Settings Elements
 const settingsPasswordToggle = document.getElementById('settings-password-toggle');
 const settingsPasswordInput = document.getElementById('settings-app-password');
+const settingsConfirmInput = document.getElementById('settings-confirm-password');
+const settingsPasswordError = document.getElementById('settings-password-error');
 const settingsStatusText = document.getElementById('settings-password-status-text');
 const saveSettingsBtn = document.getElementById('save-settings-btn');
 
@@ -106,6 +108,25 @@ function setupSecurityListeners() {
             unlockError.style.display = 'block';
             unlockInput.value = '';
         }
+    });
+
+    // Password Visibility Toggles
+    document.querySelectorAll('.password-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const wrapper = e.currentTarget.closest('.password-input-wrapper');
+            const input = wrapper.querySelector('input');
+            const icon = e.currentTarget.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
     });
 }
 
@@ -403,6 +424,8 @@ function setupModalListeners() {
         settingsPasswordToggle.checked = isProtected;
         settingsStatusText.textContent = isProtected ? 'Enabled' : 'Disabled';
         settingsPasswordInput.value = appPassword;
+        settingsConfirmInput.value = appPassword;
+        settingsPasswordError.style.display = 'none';
         
         settingsModal.classList.add('active');
     });
@@ -415,6 +438,15 @@ function setupModalListeners() {
     saveSettingsBtn.addEventListener('click', () => {
         const newProtection = settingsPasswordToggle.checked;
         const newPass = settingsPasswordInput.value || '889900';
+        const confirmPass = settingsConfirmInput.value || '889900';
+        
+        // Validate password match
+        if (newProtection && newPass !== confirmPass) {
+            settingsPasswordError.style.display = 'block';
+            return; // Abort save
+        }
+        
+        settingsPasswordError.style.display = 'none';
         
         localStorage.setItem('snipsave-protected', newProtection);
         localStorage.setItem('snipsave-password', newPass);
