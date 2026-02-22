@@ -213,7 +213,12 @@ function renderSnippets() {
                 </div>
             </div>
             <div class="snippet-body">
-                <pre><code class="language-${s.language.toLowerCase()}">${escapeHtml(s.code)}</code></pre>
+                <div class="snippet-code-wrapper">
+                    <pre><code class="language-${s.language.toLowerCase()}">${escapeHtml(s.code)}</code></pre>
+                    <div class="snippet-overlay">
+                        <button class="view-snippet-btn">View Snippet</button>
+                    </div>
+                </div>
             </div>
         </div>
     `).join('');
@@ -221,6 +226,19 @@ function renderSnippets() {
     // Apply Highlight.js to newly created code blocks
     document.querySelectorAll('.snippet-body pre code').forEach((block) => {
         hljs.highlightElement(block);
+    });
+
+    // Attach view snippet event listeners
+    document.querySelectorAll('.view-snippet-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const wrapper = e.currentTarget.closest('.snippet-code-wrapper');
+            wrapper.classList.toggle('expanded');
+            if (wrapper.classList.contains('expanded')) {
+                e.currentTarget.textContent = 'Collapse Snippet';
+            } else {
+                e.currentTarget.textContent = 'View Snippet';
+            }
+        });
     });
 
     // Attach copy event listeners

@@ -8,7 +8,7 @@
     --text-main: #111827;
     --text-muted: #6b7280;
     --border-color: #e5e7eb;
-    --code-bg: #f8f9fa;
+    --code-bg: #1e1e1e;
     --tag-bg: #e0e7ff;
     --tag-text: #4f46e5;
     --card-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -406,15 +406,67 @@ body {
 .snippet-body {
     padding: 0;
     position: relative;
+    background-color: var(--code-bg);
+}
+
+.snippet-code-wrapper {
+    position: relative;
+    max-height: 140px; /* ~4 lines of code plus padding */
+    overflow: hidden;
+}
+
+.snippet-code-wrapper.expanded {
+    max-height: none;
+}
+
+.snippet-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(transparent, var(--code-bg) 80%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0.5rem;
+}
+
+.snippet-code-wrapper.expanded .snippet-overlay {
+    position: static;
+    background: transparent;
+    height: auto;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+.view-snippet-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+}
+
+.view-snippet-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .snippet-body pre {
     margin: 0;
     padding: 1.5rem;
-    background-color: var(--code-bg);
+    background-color: transparent;
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
     font-size: 0.875rem;
+    line-height: 1.5;
     overflow-x: auto;
+    color: #ffffff !important; /* Brighter high contrast base text */
+    font-weight: 500;
 }
 
 .snippet-body code {
@@ -426,6 +478,13 @@ body {
     background: transparent !important;
     padding: 0 !important;
 }
+
+/* Enhancing syntax contrast to be much brighter */
+.hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-name, .hljs-tag { color: #61afef !important; font-weight: 600; }
+.hljs-string, .hljs-attr, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #98c379 !important; font-weight: 500; }
+.hljs-title, .hljs-section { color: #e5c07b !important; font-weight: 600; }
+.hljs-comment, .hljs-quote { color: #8a96a5 !important; font-style: italic; }
+.hljs-variable, .hljs-template-variable, .hljs-attribute { color: #c678dd !important; font-weight: 500; }
 
 /* Modal Styling */
 .modal-overlay {
